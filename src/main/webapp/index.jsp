@@ -5,9 +5,9 @@
     <title>Web Demo JSP</title>
   </head>
   <body>
-  <h1>I am a JSP ${varFromIndexServlet}</h1>
+  <h1>I am a JSP</h1>
 
-  <p>Say <a href="hello">Hello</a></p>
+  <p>Say <a href="hello">Hello ${messages.hello}</a></p>
 
   <form method="post" action="hello">
     <h2>Name:</h2>

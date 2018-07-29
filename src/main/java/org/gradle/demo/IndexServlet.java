@@ -1,6 +1,8 @@
 package org.gradle.demo;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +18,11 @@ public class IndexServlet extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
-        request.setAttribute("varFromIndexServlet", "shakalas");
+        Locale enGB = new Locale("en", "GB");
+
+        ResourceBundle messages = ResourceBundle.getBundle("org.gradle.demo.index", enGB);
+
+        request.setAttribute("messages", messages);
 
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
