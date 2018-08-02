@@ -32,7 +32,7 @@ public class HelloServletFunctionalTest {
 
     @Test
     public void sayHello() throws Exception {
-        driver.get("http://localhost:8080/webdemo");
+        driver.get("http://localhost:8080/gradle-gretty-experiment");
 
         driver.findElement(By.id("say-hello-text-input")).sendKeys("Dolly");
         driver.findElement(By.id("say-hello-button")).click();
