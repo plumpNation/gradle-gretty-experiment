@@ -1,20 +1,22 @@
 package org.gradle.demo;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import com.google.gson.Gson;
 
 public class HelloServletTest {
     @Mock private HttpServletRequest request;
@@ -35,7 +37,11 @@ public class HelloServletTest {
 
         new HelloServlet().doGet(request, response);
 
-        assertEquals("Hello, World!", stringWriter.toString());
+        Gson gson = new Gson();
+
+        MessageResponse message = gson.fromJson(stringWriter.toString(), MessageResponse.class);
+
+        assertEquals(message.getMessage(), "Hello world");
     }
 
     @Test
@@ -46,7 +52,7 @@ public class HelloServletTest {
         new HelloServlet().doPost(request, response);
 
         verify(request).setAttribute("user", "World");
-        verify(requestDispatcher).forward(request,response);
+        verify(requestDispatcher).forward(request, response);
     }
 
     @Test
@@ -58,6 +64,6 @@ public class HelloServletTest {
         new HelloServlet().doPost(request, response);
 
         verify(request).setAttribute("user", "Dolly");
-        verify(requestDispatcher).forward(request,response);
+        verify(requestDispatcher).forward(request, response);
     }
 }
